@@ -97,7 +97,7 @@ export default function SgiDetail() {
       <div className="mt-6 flex flex-wrap gap-3">
         {sgi.source_pdf && (
           <a href={PDF_BASE + encodeURIComponent(sgi.source_pdf)} target="_blank" rel="noreferrer"
-            className="inline-flex items-center gap-2.5 rounded-xl bg-navy px-5 py-3.5 text-[13.5px] font-medium text-cream transition hover:bg-navy-600">
+            className="on-navy inline-flex items-center gap-2.5 rounded-xl bg-navy px-5 py-3.5 text-[13.5px] font-medium text-cream transition hover:bg-navy-600">
             <FileText size={18} className="text-copper-300" /> Voir la grille officielle (PDF)
           </a>
         )}
