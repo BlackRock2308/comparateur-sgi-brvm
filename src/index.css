@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+/* ===== FIRE Africa × Omaad — design tokens (dark = défaut) ===== */
+@theme {
+  --color-navy: #1b2a4a;
+  --color-navy-950: #0b1320;
+  --color-navy-900: #0e1626;
+  --color-navy-800: #13203a;
+  --color-navy-700: #1b2a4a;
+  --color-navy-600: #243561;
+
+  --color-copper: #c47b3c;
+  --color-copper-300: #dca264;
+  --color-copper-200: #e7bd8c;
+
+  /* foreground sur le canvas (bascule selon le thème) */
+  --color-cream: #f4ecdb;     /* texte principal sur canvas */
+  --color-fog: #8b93a6;       /* texte atténué */
+  --color-fog2: #c4ccdb;      /* texte atténué clair */
+
+  /* surfaces "carte" (claires dans les deux thèmes) */
+  --color-cream-card: #f6f0e2;
+  --color-cream-soft: #fbf7ee;
+
+  /* texte interne des cartes (toujours foncé) */
+  --color-ink: #192741;
+  --color-sand: #8a8167;
+  --color-ok: #2f9e6f;
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
+
+  --shadow-card: 0 10px 30px -8px rgba(8, 14, 28, 0.45);
+  --shadow-pop: 0 30px 70px -20px rgba(8, 14, 28, 0.7);
+}
+
+/* variables de thème (plain CSS pour pouvoir les surcharger en mode clair) */
+:root {
+  --canvas:
+    radial-gradient(1100px 560px at 88% -8%, rgba(196, 123, 60, 0.20), transparent 60%),
+    radial-gradient(900px 600px at -10% 8%, rgba(36, 53, 97, 0.55), transparent 55%),
+    linear-gradient(176deg, #0e1729 0%, #0b1320 100%);
+  --glass: rgba(17, 27, 46, 0.70);
+  --glass-2: rgba(255, 255, 255, 0.05);
+  --brd: rgba(255, 255, 255, 0.10);
+  --surf: rgba(255, 255, 255, 0.05);
+}
+
+html.light {
+  --color-cream: #16243f;     /* le "texte principal" devient foncé */
+  --color-fog: #6c6657;
+  --color-fog2: #475168;
+  --color-cream-card: #fdfaf3;
+  --color-cream-soft: #fffdf8;
+
+  --canvas:
+    radial-gradient(1000px 520px at 88% -10%, rgba(196, 123, 60, 0.16), transparent 62%),
+    linear-gradient(176deg, #f1e8d6 0%, #f6efe0 100%);
+  --glass: rgba(255, 255, 255, 0.74);
+  --glass-2: rgba(25, 39, 65, 0.045);
+  --brd: rgba(25, 39, 65, 0.13);
+  --surf: rgba(25, 39, 65, 0.05);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-cream);
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--canvas) fixed;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 0.3s ease;
+  }
+  ::selection { background: rgba(196, 123, 60, 0.35); }
+}
+
+@layer utilities {
+  .glass { background: var(--glass); backdrop-filter: blur(14px); }
+  .glass-light { background: var(--glass-2); backdrop-filter: blur(8px); }
+  .u-border { border-color: var(--brd) !important; }
+  .u-surf { background: var(--surf); }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .card-cream { background: linear-gradient(168deg, var(--color-cream-card), color-mix(in srgb, var(--color-cream-card) 92%, #000)); }
+  .card-cream-thin { background: linear-gradient(168deg, color-mix(in srgb, var(--color-cream-card) 92%, #000), color-mix(in srgb, var(--color-cream-card) 84%, #000)); }
+  /* bandeaux navy : forcent le foreground "clair" quel que soit le thème */
+  .on-navy { --color-cream: #f4ecdb; --color-fog: #9aa6bd; --color-fog2: #aab3c7; }
+}

@@ -1,0 +1,30 @@
+# Netlify — déploiement de l'app SGI Explorer (Vite + React)
+# Si tu connectes le repo Git : règle "Base directory" = sgi-explorer/app dans l'UI Netlify,
+# ce fichier fait le reste. Si tu déploies par drag-and-drop, glisse le dossier app/dist/.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Sécurité de base
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache long pour les assets fingerprintés
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Fallback SPA (inutile avec HashRouter, mais sans risque : les fichiers réels
+# — /assets, /pdfs — sont servis avant ce rewrite).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
